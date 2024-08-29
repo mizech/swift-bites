@@ -1,4 +1,5 @@
 import SwiftUI
+
 /// The main view that appears when the app is launched.
 struct ContentView: View {
   @Environment(\.storage) private var storage
