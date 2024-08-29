@@ -6,7 +6,7 @@ class Recipe: Identifiable {
     let id = UUID()
     var name: String
     var summary: String
-    var category: MockCategory?
+    var category: Category?
     var serving: Int
     var time: Int
     var ingredients: [RecipeIngredient]
@@ -15,7 +15,7 @@ class Recipe: Identifiable {
     
     init(name: String = "",
       summary: String = "",
-      category: MockCategory? = nil,
+      category: Category? = nil,
       serving: Int = 1,
       time: Int = 5,
       ingredients: [RecipeIngredient] = [],
