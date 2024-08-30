@@ -3,6 +3,7 @@ import SwiftData
 
 struct IngredientsView: View {
   @Query private var ingredients: [Ingredient]
+  @Environment(\.modelContext) var context
   @Environment(\.dismiss) private var dismiss
   @State private var query = ""
   typealias Selection = (Ingredient) -> Void
@@ -120,6 +121,6 @@ struct IngredientsView: View {
   // MARK: - Data
 
   private func delete(ingredient: Ingredient) {
-    // storage.deleteIngredient(id: ingredient.id)
+      context.delete(ingredient)
   }
 }
