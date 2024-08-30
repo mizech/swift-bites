@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct IngredientForm: View {
+  @Environment(\.modelContext) var context
+    
   enum Mode: Hashable {
     case add
-    case edit(MockIngredient)
+    case edit(Ingredient)
   }
 
   var mode: Mode
@@ -66,7 +68,7 @@ struct IngredientForm: View {
 
   // MARK: - Data
 
-  private func delete(ingredient: MockIngredient) {
+  private func delete(ingredient: Ingredient) {
     storage.deleteIngredient(id: ingredient.id)
     dismiss()
   }
@@ -75,7 +77,7 @@ struct IngredientForm: View {
     do {
       switch mode {
       case .add:
-        try storage.addIngredient(name: name)
+        context.insert(Ingredient(name: name))
       case .edit(let ingredient):
         try storage.updateIngredient(id: ingredient.id, name: name)
       }

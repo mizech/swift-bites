@@ -6,7 +6,7 @@ struct SwiftBitesApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
-            .modelContainer(for: Category.self)
+            .modelContainer(for: [Category.self, Ingredient.self])
     }
   }
 }
