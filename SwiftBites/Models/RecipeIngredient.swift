@@ -2,7 +2,7 @@ import Foundation
 import SwiftData
 
 @Model
-class RecipeIngredient {
+final class RecipeIngredient {
     let id = UUID()
     var ingredient: Ingredient
     var quantity: String

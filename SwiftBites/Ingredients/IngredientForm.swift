@@ -69,7 +69,7 @@ struct IngredientForm: View {
   // MARK: - Data
 
   private func delete(ingredient: Ingredient) {
-    storage.deleteIngredient(id: ingredient.id)
+    context.delete(ingredient)
     dismiss()
   }
 

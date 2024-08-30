@@ -2,8 +2,9 @@ import Foundation
 import SwiftData
 
 @Model
-class Recipe: Identifiable {
+final class Recipe: Identifiable {
     let id = UUID()
+    @Attribute(.unique)
     var name: String
     var summary: String
     var category: Category?
