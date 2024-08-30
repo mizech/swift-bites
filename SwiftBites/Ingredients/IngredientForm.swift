@@ -79,7 +79,8 @@ struct IngredientForm: View {
       case .add:
         context.insert(Ingredient(name: name))
       case .edit(let ingredient):
-        try storage.updateIngredient(id: ingredient.id, name: name)
+        ingredient.name = name
+        try context.save()
       }
       dismiss()
     } catch {
