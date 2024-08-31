@@ -2,7 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct RecipesView: View {
-  @Environment(\.storage) private var storage
   @Query private var recipes: [Recipe]
   @State private var query = ""
   @State private var sortOrder = SortDescriptor(\Recipe.name)
@@ -14,7 +13,7 @@ struct RecipesView: View {
       content
         .navigationTitle("Recipes")
         .toolbar {
-          if !storage.recipes.isEmpty {
+          if recipes.isEmpty == false {
             sortOptions
             ToolbarItem(placement: .topBarTrailing) {
               NavigationLink(value: RecipeForm.Mode.add) {

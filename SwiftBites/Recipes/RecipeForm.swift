@@ -1,8 +1,12 @@
 import SwiftUI
 import PhotosUI
 import Foundation
+import SwiftData
 
 struct RecipeForm: View {
+  @Environment(\.modelContext) private var context
+  @Query private var categories: [Category]
+    
   enum Mode: Hashable {
     case add
     case edit(Recipe)
@@ -41,7 +45,7 @@ struct RecipeForm: View {
   @State private var serving: Int
   @State private var time: Int
   @State private var instructions: String
-  @State private var categoryId: MockCategory.ID?
+  @State private var categoryId: Category.ID?
   @State private var ingredients: [RecipeIngredient]
   @State private var imageItem: PhotosPickerItem?
   @State private var imageData: Data?
@@ -87,8 +91,8 @@ struct RecipeForm: View {
 
   private func ingredientPicker() -> some View {
     IngredientsView { selectedIngredient in
-//      let recipeIngredient = MockRecipeIngredient(ingredient: selectedIngredient, quantity: "")
-//      ingredients.append(recipeIngredient)
+      let recipeIngredient = RecipeIngredient(ingredient: selectedIngredient, quantity: "")
+      ingredients.append(recipeIngredient)
     }
   }
 
@@ -110,7 +114,13 @@ struct RecipeForm: View {
           .frame(width: width)
           .clipped()
           .listRowInsets(EdgeInsets())
-          .frame(maxWidth: .infinity, minHeight: 200, idealHeight: 200, maxHeight: 200, alignment: .center)
+          .frame(
+            maxWidth: .infinity,
+            minHeight: 200,
+            idealHeight: 200,
+            maxHeight: 200,
+            alignment: .center
+          )
       } else {
         Label("Select Image", systemImage: "photo")
       }
@@ -156,9 +166,9 @@ struct RecipeForm: View {
   private var categorySection: some View {
     Section {
       Picker("Category", selection: $categoryId) {
-        Text("None").tag(nil as MockCategory.ID?)
+        Text("None").tag(nil as Category.ID?)
         ForEach(storage.categories) { category in
-          Text(category.name).tag(category.id as MockCategory.ID?)
+          Text(category.name).tag(category.id as Category.ID?)
         }
       }
     }
@@ -257,7 +267,7 @@ struct RecipeForm: View {
     guard case .edit(let recipe) = mode else {
       fatalError("Delete unavailable in add mode")
     }
-    storage.deleteRecipe(id: recipe.id)
+    context.delete(recipe)
     dismiss()
   }
 
@@ -268,35 +278,34 @@ struct RecipeForm: View {
   }
 
   func save() {
-    let category = storage.categories.first(where: { $0.id == categoryId })
+    let category = categories.first(where: { $0.id == categoryId })
 
     do {
       switch mode {
       case .add:
-              print("Add")
-//        try storage.addRecipe(
-//          name: name,
-//          summary: summary,
-//          category: category,
-//          serving: serving,
-//          time: time,
-//          ingredients: ingredients,
-//          instructions: instructions,
-//          imageData: imageData
-//        )
+          context.insert(
+            Recipe(
+                name: name,
+                summary: summary,
+                category: category,
+                serving: serving,
+                time: time,
+                ingredients: ingredients,
+                instructions: instructions,
+                imageData: imageData
+            )
+          )
       case .edit(let recipe):
-              print("Edit")
-//        try storage.updateRecipe(
-//          id: recipe.id,
-//          name: name,
-//          summary: summary,
-//          category: category,
-//          serving: serving,
-//          time: time,
-//          ingredients: ingredients,
-//          instructions: instructions,
-//          imageData: imageData
-//        )
+        recipe.name = name
+        recipe.summary = summary
+        recipe.category = category
+        recipe.summary = summary
+        recipe.time = time
+        recipe.ingredients = ingredients
+        recipe.instructions = instructions
+        recipe.imageData = imageData
+              
+        try context.save()
       }
       dismiss()
     } catch {
