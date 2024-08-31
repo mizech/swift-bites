@@ -52,8 +52,7 @@ struct RecipeForm: View {
   @State private var isIngredientsPickerPresented =  false
   @State private var error: Error?
   @Environment(\.dismiss) private var dismiss
-  @Environment(\.storage) private var storage
-
+  
   // MARK: - Body
 
   var body: some View {
@@ -167,7 +166,7 @@ struct RecipeForm: View {
     Section {
       Picker("Category", selection: $categoryId) {
         Text("None").tag(nil as Category.ID?)
-        ForEach(storage.categories) { category in
+        ForEach(categories) { category in
           Text(category.name).tag(category.id as Category.ID?)
         }
       }

@@ -4,6 +4,7 @@ import SwiftData
 @Model
 final class RecipeIngredient {
     let id = UUID()
+    @Relationship
     var ingredient: Ingredient
     var quantity: String
     

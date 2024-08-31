@@ -7,9 +7,11 @@ final class Recipe: Identifiable {
     @Attribute(.unique)
     var name: String
     var summary: String
+    @Relationship
     var category: Category?
     var serving: Int
     var time: Int
+    @Relationship
     var ingredients: [RecipeIngredient]
     var instructions: String
     var imageData: Data?

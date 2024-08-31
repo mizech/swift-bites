@@ -7,7 +7,8 @@ final class Category: Identifiable {
     let id = UUID()
     @Attribute(.unique)
     var name: String
-    var recipes: [Recipe]
+    @Relationship(deleteRule: .cascade, inverse: \Recipe.category)
+    var recipes: [Recipe] = []
     
     init(name: String, recipes: [Recipe]) {
         self.name = name
