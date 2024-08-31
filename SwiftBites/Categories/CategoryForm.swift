@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct CategoryForm: View {
+  @Environment(\.modelContext) var context
   enum Mode: Hashable {
     case add
-    case edit(MockCategory)
+    case edit(Category)
   }
 
   var mode: Mode
@@ -23,7 +24,6 @@ struct CategoryForm: View {
   private let title: String
   @State private var name: String
   @State private var error: Error?
-  @Environment(\.storage) private var storage
   @Environment(\.dismiss) private var dismiss
   @FocusState private var isNameFocused: Bool
 
@@ -67,8 +67,8 @@ struct CategoryForm: View {
 
   // MARK: - Data
 
-  private func delete(category: MockCategory) {
-    storage.deleteCategory(id: category.id)
+  private func delete(category: Category) {
+    context.delete(category)
     dismiss()
   }
 
@@ -76,9 +76,10 @@ struct CategoryForm: View {
     do {
       switch mode {
       case .add:
-        try storage.addCategory(name: name)
+        context.insert(Category(name: name, recipes: []))
       case .edit(let category):
-        try storage.updateCategory(id: category.id, name: name)
+        category.name = name
+        try context.save()
       }
       dismiss()
     } catch {

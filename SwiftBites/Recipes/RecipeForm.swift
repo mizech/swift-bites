@@ -5,7 +5,7 @@ import Foundation
 struct RecipeForm: View {
   enum Mode: Hashable {
     case add
-    case edit(MockRecipe)
+    case edit(Recipe)
   }
 
   var mode: Mode
@@ -42,7 +42,7 @@ struct RecipeForm: View {
   @State private var time: Int
   @State private var instructions: String
   @State private var categoryId: MockCategory.ID?
-  @State private var ingredients: [MockRecipeIngredient]
+  @State private var ingredients: [RecipeIngredient]
   @State private var imageItem: PhotosPickerItem?
   @State private var imageData: Data?
   @State private var isIngredientsPickerPresented =  false
@@ -253,7 +253,7 @@ struct RecipeForm: View {
 
   // MARK: - Data
 
-  func delete(recipe: MockRecipe) {
+  func delete(recipe: Recipe) {
     guard case .edit(let recipe) = mode else {
       fatalError("Delete unavailable in add mode")
     }
@@ -273,28 +273,30 @@ struct RecipeForm: View {
     do {
       switch mode {
       case .add:
-        try storage.addRecipe(
-          name: name,
-          summary: summary,
-          category: category,
-          serving: serving,
-          time: time,
-          ingredients: ingredients,
-          instructions: instructions,
-          imageData: imageData
-        )
+              print("Add")
+//        try storage.addRecipe(
+//          name: name,
+//          summary: summary,
+//          category: category,
+//          serving: serving,
+//          time: time,
+//          ingredients: ingredients,
+//          instructions: instructions,
+//          imageData: imageData
+//        )
       case .edit(let recipe):
-        try storage.updateRecipe(
-          id: recipe.id,
-          name: name,
-          summary: summary,
-          category: category,
-          serving: serving,
-          time: time,
-          ingredients: ingredients,
-          instructions: instructions,
-          imageData: imageData
-        )
+              print("Edit")
+//        try storage.updateRecipe(
+//          id: recipe.id,
+//          name: name,
+//          summary: summary,
+//          category: category,
+//          serving: serving,
+//          time: time,
+//          ingredients: ingredients,
+//          instructions: instructions,
+//          imageData: imageData
+//        )
       }
       dismiss()
     } catch {

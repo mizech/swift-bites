@@ -282,29 +282,29 @@ final class Storage {
   func addRecipe(
     name: String,
     summary: String,
-    category: MockCategory?,
+    category: Category?,
     serving: Int,
     time: Int,
-    ingredients: [MockRecipeIngredient],
+    ingredients: [RecipeIngredient],
     instructions: String,
     imageData: Data?
   ) throws {
     guard recipes.contains(where: { $0.name == name }) == false else {
       throw Error.recipeExists
     }
-    let recipe = MockRecipe(
-      name: name,
-      summary: summary,
-      category: category,
-      serving: serving,
-      time: time,
-      ingredients: ingredients,
-      instructions: instructions,
-      imageData: imageData
-    )
-    recipes.append(recipe)
+//    let recipe = MockRecipe(
+//      name: name,
+//      summary: summary,
+//      category: category,
+//      serving: serving,
+//      time: time,
+//      ingredients: ingredients,
+//      instructions: instructions,
+//      imageData: imageData
+//    )
+//    recipes.append(recipe)
     if let category, let index = categories.firstIndex(where: { $0.id == category.id }) {
-      categories[index].recipes.append(recipe)
+      // categories[index].recipes.append(recipe)
     }
   }
 

@@ -1,9 +1,11 @@
 import SwiftUI
+import SwiftData
 
 struct RecipesView: View {
   @Environment(\.storage) private var storage
+  @Query private var recipes: [Recipe]
   @State private var query = ""
-  @State private var sortOrder = SortDescriptor(\MockRecipe.name)
+  @State private var sortOrder = SortDescriptor(\Recipe.name)
 
   // MARK: - Body
 
@@ -56,16 +58,16 @@ struct RecipesView: View {
 
   @ViewBuilder
   private var content: some View {
-    if storage.recipes.isEmpty {
+    if recipes.isEmpty {
       empty
     } else {
-      list(for: storage.recipes.filter {
+      list(for: recipes.filter {
         if query.isEmpty {
           return true
         } else {
           return $0.name.localizedStandardContains(query) || $0.summary.localizedStandardContains(query)
         }
-      }.sorted(using: sortOrder))
+      })
     }
   }
 
@@ -93,7 +95,7 @@ struct RecipesView: View {
     )
   }
 
-  private func list(for recipes: [MockRecipe]) -> some View {
+  private func list(for recipes: [Recipe]) -> some View {
     ScrollView(.vertical) {
       if recipes.isEmpty {
         noResults

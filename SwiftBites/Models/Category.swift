@@ -7,9 +7,9 @@ final class Category: Identifiable {
     let id = UUID()
     @Attribute(.unique)
     var name: String
-    var recipes: [String]
+    var recipes: [Recipe]
     
-    init(name: String, recipes: [String]) {
+    init(name: String, recipes: [Recipe]) {
         self.name = name
         self.recipes = recipes
     }
