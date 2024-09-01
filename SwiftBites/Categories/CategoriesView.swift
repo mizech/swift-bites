@@ -27,7 +27,22 @@ struct CategoriesView: View {
         }
     }
   }
-
+    
+    private var fetchedCategories: [Category] {
+        let pred = #Predicate<Category> { category in
+            category.name.localizedStandardContains(query)
+        }
+        
+        let fetchDesc = FetchDescriptor<Category>(
+            predicate: query.isEmpty ? nil : pred
+        )
+        
+        do {
+            return try context.fetch(fetchDesc)
+        } catch {
+            return []
+        }
+    }
   // MARK: - Views
 
   @ViewBuilder
@@ -35,13 +50,7 @@ struct CategoriesView: View {
     if categories.isEmpty {
       empty
     } else {
-      list(for: categories.filter {
-        if query.isEmpty {
-          return true
-        } else {
-          return $0.name.localizedStandardContains(query)
-        }
-      })
+      list(for: fetchedCategories)
     }
   }
 
