@@ -91,7 +91,8 @@ struct RecipeForm: View {
   private func ingredientPicker() -> some View {
     IngredientsView { selectedIngredient in
       let recipeIngredient = RecipeIngredient(ingredient: selectedIngredient, quantity: "")
-      ingredients.append(recipeIngredient)
+      context.insert(recipeIngredient)
+      self.ingredients.append(recipeIngredient)
     }
   }
 

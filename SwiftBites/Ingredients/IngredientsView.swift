@@ -108,7 +108,9 @@ struct IngredientsView: View {
         if let selection {
             Button(
                 action: {
+                    print(ingredient.name)
                     selection(ingredient)
+                    print("End")
                     dismiss()
                 },
                 label: {
