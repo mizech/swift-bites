@@ -10,7 +10,7 @@ final class Recipe: Identifiable {
     var category: Category?
     var serving: Int
     var time: Int
-    @Relationship(deleteRule: .cascade, inverse: \RecipeIngredient.recipe)
+    @Relationship(deleteRule: .cascade)
     var ingredients: [RecipeIngredient]
     var instructions: String
     var imageData: Data?

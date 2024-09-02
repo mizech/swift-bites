@@ -4,7 +4,7 @@ import SwiftData
 @Model
 final class RecipeIngredient {
     let id = UUID()
-    @Relationship(deleteRule: .nullify)
+    @Relationship(deleteRule: .cascade)
     var ingredient: Ingredient
     var quantity: String
     var recipe: Recipe?
