@@ -4,7 +4,6 @@ import Foundation
 import SwiftData
 
 struct RecipeForm: View {
-  @Environment(\.modelContext) private var context
   @Query private var categories: [Category]
     
   enum Mode: Hashable {
@@ -13,30 +12,33 @@ struct RecipeForm: View {
   }
 
   var mode: Mode
+  var context: ModelContext
 
-  init(mode: Mode) {
-    self.mode = mode
-    switch mode {
-    case .add:
-      title = "Add Recipe"
-      _name = .init(initialValue: "")
-      _summary = .init(initialValue: "")
-      _serving = .init(initialValue: 1)
-      _time = .init(initialValue: 5)
-      _instructions = .init(initialValue: "")
-      _ingredients = .init(initialValue: [])
-    case .edit(let recipe):
-      title = "Edit \(recipe.name)"
-      _name = .init(initialValue: recipe.name)
-      _summary = .init(initialValue: recipe.summary)
-      _serving = .init(initialValue: recipe.serving)
-      _time = .init(initialValue: recipe.time)
-      _instructions = .init(initialValue: recipe.instructions)
-      _ingredients = .init(initialValue: recipe.ingredients)
-      _categoryId = .init(initialValue: recipe.category?.id)
-      _imageData = .init(initialValue: recipe.imageData)
+    init(mode: Mode, context: ModelContext) {
+        self.mode = mode
+        self.context = context
+        
+        switch mode {
+        case .add:
+          title = "Add Recipe"
+          _name = .init(initialValue: "")
+          _summary = .init(initialValue: "")
+          _serving = .init(initialValue: 1)
+          _time = .init(initialValue: 5)
+          _instructions = .init(initialValue: "")
+          _ingredients = .init(initialValue: [])
+        case .edit(let recipe):
+          title = "Edit \(recipe.name)"
+          _name = .init(initialValue: recipe.name)
+          _summary = .init(initialValue: recipe.summary)
+          _serving = .init(initialValue: recipe.serving)
+          _time = .init(initialValue: recipe.time)
+          _instructions = .init(initialValue: recipe.instructions)
+          _ingredients = .init(initialValue: recipe.ingredients)
+          _categoryId = .init(initialValue: recipe.category?.id)
+          _imageData = .init(initialValue: recipe.imageData)
 
-    }
+        }
   }
 
   private let title: String
@@ -89,9 +91,8 @@ struct RecipeForm: View {
   // MARK: - Views
 
   private func ingredientPicker() -> some View {
-    IngredientsView { selectedIngredient in
+      IngredientsView(context: context) { selectedIngredient in
       let recipeIngredient = RecipeIngredient(ingredient: selectedIngredient, quantity: "")
-      context.insert(recipeIngredient)
       self.ingredients.append(recipeIngredient)
     }
   }
@@ -201,18 +202,18 @@ struct RecipeForm: View {
           }
         )
       } else {
-        ForEach(ingredients) { ingredient in
+        ForEach(ingredients) { current in
           HStack(alignment: .center) {
-            Text(ingredient.ingredient.name)
+              Text("Ingredient")
               .bold()
               .layoutPriority(2)
             Spacer()
             TextField("Quantity", text: .init(
               get: {
-                ingredient.quantity
+                current.quantity
               },
               set: { quantity in
-                if let index = ingredients.firstIndex(where: { $0.id == ingredient.id }) {
+                if let index = ingredients.firstIndex(where: { $0.id == current.id }) {
                   ingredients[index].quantity = quantity
                 }
               }

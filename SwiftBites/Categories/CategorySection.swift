@@ -4,7 +4,7 @@ struct CategorySection: View {
   let category: Category
 
   // MARK: - Body
-
+    
   var body: some View {
     Section(
       content: {

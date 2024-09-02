@@ -4,9 +4,10 @@ import SwiftData
 @Model
 final class RecipeIngredient {
     let id = UUID()
-    @Relationship
+    @Relationship(deleteRule: .nullify)
     var ingredient: Ingredient
     var quantity: String
+    var recipe: Recipe?
     
     init(ingredient: Ingredient = Ingredient(),
         quantity: String = ""

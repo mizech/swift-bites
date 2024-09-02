@@ -23,7 +23,7 @@ struct CategoriesView: View {
                     CategoryForm(mode: mode)
                 }
                 .navigationDestination(for: RecipeForm.Mode.self) { mode in
-                    RecipeForm(mode: mode)
+                    RecipeForm(mode: mode, context: context)
                 }
         }
     }

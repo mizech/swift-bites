@@ -3,14 +3,15 @@ import SwiftData
 
 struct IngredientsView: View {
     @Query private var ingredients: [Ingredient]
-    @Environment(\.modelContext) var context
+    var context: ModelContext
     @Environment(\.dismiss) private var dismiss
     @State private var query = ""
     typealias Selection = (Ingredient) -> Void
     
     let selection: Selection?
     
-    init(selection: Selection? = nil) {
+    init(context: ModelContext, selection: Selection? = nil) {
+        self.context = context
         self.selection = selection
     }
     
@@ -108,9 +109,7 @@ struct IngredientsView: View {
         if let selection {
             Button(
                 action: {
-                    print(ingredient.name)
                     selection(ingredient)
-                    print("End")
                     dismiss()
                 },
                 label: {

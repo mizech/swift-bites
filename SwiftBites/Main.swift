@@ -2,6 +2,7 @@ import SwiftUI
 
 /// The main view that appears when the app is launched.
 struct ContentView: View {
+  @Environment(\.modelContext) var context
   var body: some View {
     TabView {
       RecipesView()
@@ -14,7 +15,7 @@ struct ContentView: View {
           Label("Categories", systemImage: "tag")
         }
 
-      IngredientsView()
+      IngredientsView(context: context)
         .tabItem {
           Label("Ingredients", systemImage: "carrot")
         }
