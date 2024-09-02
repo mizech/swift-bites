@@ -61,7 +61,8 @@ struct RecipesView: View {
         }
         
         let fetchDesc = FetchDescriptor<Recipe>(
-            predicate: query.isEmpty ? nil : pred
+            predicate: query.isEmpty ? nil : pred,
+            sortBy: [sortOrder]
         )
         
         do {

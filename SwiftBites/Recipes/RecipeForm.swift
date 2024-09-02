@@ -296,6 +296,7 @@ struct RecipeForm: View {
                 imageData: imageData
             )
           )
+        print(category)
       case .edit(let recipe):
         recipe.name = name
         recipe.summary = summary
