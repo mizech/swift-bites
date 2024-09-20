@@ -5,12 +5,12 @@ struct ContentView: View {
   @Environment(\.modelContext) var context
   var body: some View {
     TabView {
-      RecipesView()
+      RecipesView(context: context)
         .tabItem {
           Label("Recipes", systemImage: "frying.pan")
         }
 
-      CategoriesView()
+      CategoriesView(context: context)
         .tabItem {
           Label("Categories", systemImage: "tag")
         }

@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct RecipesView: View {
-    @Environment(\.modelContext) var context
+    var context: ModelContext
     @Query private var recipes: [Recipe]
     @State private var query = ""
     @State private var sortOrder = SortDescriptor(\Recipe.name)
@@ -55,6 +55,7 @@ struct RecipesView: View {
             .pickerStyle(.inline)
         }
     }
+    
     private var fetchedRecipes: [Recipe] {
         let pred = #Predicate<Recipe> { ingredient in
             ingredient.name.localizedStandardContains(query)

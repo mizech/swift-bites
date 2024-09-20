@@ -5,7 +5,7 @@ import SwiftData
 final class Ingredient: Identifiable {
     let id = UUID()
     @Attribute(.unique)
-    var name: String
+    var name: String = ""
     
     init(name: String = "") {
         self.name = name

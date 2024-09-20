@@ -5,9 +5,9 @@ import SwiftData
 final class RecipeIngredient {
     let id = UUID()
     @Relationship(deleteRule: .cascade)
-    var ingredient: Ingredient
+    var ingredient: Ingredient? = nil
     var quantity: String
-    var recipe: Recipe?
+    var recipe: Recipe? = nil
     
     init(ingredient: Ingredient = Ingredient(),
         quantity: String = ""
