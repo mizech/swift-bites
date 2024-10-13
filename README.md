@@ -1,4 +1,4 @@
-# UDACITY Online-Course [iOS User Interfaces with Swift UI](https://www.udacity.com/course/iOS-user-interfaces-with-swift--cd13100)
+# UDACITY Online-Course [iOS Application Data with SwiftData](https://www.udacity.com/course/iOS-application-data-with-swiftdata--cd13102)
 
 ## Course-project and certificate
 
